@@ -1,22 +1,33 @@
 import React, {useState} from 'react'
 import { Box,Button,TextField,Typography } from '@mui/material'
+import {addUser} from '../components/service/api';
 
+ const initialvalue= {
+   Name: '',
+   Address:'',
+   Email:'',
+   Password:''
+ }
+  function Login()  {
+   const [user, setUser] = useState(initialvalue); // user areobject 
+   const onValueChane = (e) => {
+     //console.log(e.target.id,e.target.value)
+     setUser({...user,[e.target.id]: e.target.value}) // setUser  store valuen in the  user object (key=e.tag.id that's why use in [e.taget.id])
+     //console.log(user)
+   }
+   const addUserDetails = async () => {
+    await addUser(user);  // call
+   }
 
-function Login() {
-    function xyz() {
-        console.log(Name)
-        console.log(Email)
-        console.log(password)
-    }
-    const [IsSignup, setIsSignup] = useState(false);
+    
   return (
   
     <Box 
      display="flex"
      flexDirection={"Column"}
      maxWidth={400}
-     alignitems="center"
-     justifyContent={"center"}
+     alignitems="auto"
+     justifyContent={"auto"}
      margin="auto"
      marginTop={5}
      padding={3}
@@ -24,11 +35,12 @@ function Login() {
        boxShadow={"5px 5px 10px #ccc"}
     >
      <Typography variant="h2"padding={3}textAlign="center">Login</Typography>
-     <TextField id="filled-basic" label="Name" type={"text"} variant="filled" /><br/>
-     <TextField id="standard-basic" label="Email" type={"email"} variant="filled" /><br/>
-     <TextField id="outlined-basic" label="Password" type={"password"} variant="filled" /><br/>
-     <Button onClick={()=>{xyz()}}sx={{marginTop:3, borderRadius:3}} variant="contained" color="warning">Login</Button>
-     <Button onClick={()=>setIsSignup} sx={{marginTop:3, borderRadius:3}}>Signup</Button>
+     <TextField id="name" label="Name" type={"text"} variant="filled"  onChange={(e)=>onValueChane(e)}/><br/>
+     <TextField id="address" label="Address" type={"text"} variant="filled" onChange={(e)=>onValueChane(e)} /><br/>
+     <TextField id="email" label="Email" type={"email"} variant="filled" onChange={(e)=>onValueChane(e)} /><br/>
+     <TextField id="pasword" label="Password" type={"password"} variant="filled" onChange={(e)=>onValueChane(e)}S/><br/>
+     <Button  variant="contained" color="warning" onClick={()=>addUserDetails()}>Signup</Button>
+     <Button  sx={{marginTop:3, borderRadius:3}}>Reset</Button>
     </Box>
       
 
